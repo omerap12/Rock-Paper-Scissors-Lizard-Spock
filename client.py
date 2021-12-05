@@ -90,13 +90,13 @@ class Client:
                         if button.click(position_of_pressed_mouse) and game.running():  # if game running button clicked
                             text = button.text  # get the text from button
                             if player_index == 0:  # if its the first player
-                                if not game.player_one_played:
+                                if not game.player_one_played: # dont allow to player one to change selection
                                     network.send(text)
                             else:
-                                if not game.player_two_played:
+                                if not game.player_two_played: # dont allow to player two to change selection
                                     network.send(text)
                 if game.doesBothPlayerPlayed():  # if both players have played there turn
-                    self.redrawWindow(self.window, game, player_index)
+                    self.redrawWindow(self.window, game, player_index) # call function to show result one screen
                     pygame.time.delay(500)
                     try:
                         game = network.send("reset")  # tell the server reset the game
