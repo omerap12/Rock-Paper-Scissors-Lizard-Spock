@@ -1,7 +1,7 @@
 # Rock-Paper-Scissors-Lizard-Spock---Python
 
 How to run:
-run server.py with port number
+run server.py with valid port number
 for example: python3 server.py 1234
 
 run client.py with the same port number
