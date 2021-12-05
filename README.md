@@ -5,6 +5,6 @@ run server.py with valid port number
 for example: python3 server.py 1234
 
 run client.py with the same port number
-for example: python3 server.py 1234
+for example: python3 client.py 1234
 
 get your friend run client.py with the same port number
