@@ -5,13 +5,7 @@ class Game:
         self.moves = [None, None]
         self.is_game_ready = False
         self.id = id
-        self.movement_data_base = {
-            "Rock": "R",
-            "Paper": "P",
-            "Scissors": "S",
-            "Lizard": "L",
-            "Spock": "C"
-        }
+        
 
     def doesBothPlayerPlayed(self):
         return self.player_two_played and self.player_one_played
