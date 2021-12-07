@@ -29,8 +29,8 @@ class Server:
                         games[gameId].reset_game()
                     elif data != 'start':  # means move was send (the only left option)
                         games[gameId].update_player_move(player_index, data)
-                    game_to_send = games[gameId] # get the updated game to send
-                    conn.sendall(pickle.dumps(game_to_send)) # send with pickle
+                    game_to_send = games[gameId]  # get the updated game to send
+                    conn.sendall(pickle.dumps(game_to_send))  # send with pickle
                 else:
                     break
             except Exception as e:
@@ -63,6 +63,11 @@ class Server:
 
 
 if __name__ == '__main__':
+    try:
+        PORT = int(sys.argv[1])
+    except Exception as e:
+        print(f'Wrong Port: {e}')
+        sys.exit(1)
     count_id = 0
-    server = Server(int(sys.argv[1]))
+    server = Server(PORT)
     server.main_loop()
