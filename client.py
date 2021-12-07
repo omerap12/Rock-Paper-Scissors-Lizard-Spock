@@ -6,7 +6,8 @@ from button import Button
 
 
 class Client:
-    def __init__(self, server_port):
+    def __init__(self, server_ip, server_port):
+        self.server_ip = server_ip
         self.server_port = server_port
         self.width = 700
         self.height = 700
@@ -17,7 +18,7 @@ class Client:
                         Button("Spock", 350, 600, (128, 128, 0))]
 
     def redrawWindow(self, window, game, player_index):
-        window.fill((235, 206, 206)) # color of the window
+        window.fill((235, 206, 206))  # color of the window
         if not (game.running()):  # waiting for player
             font = pygame.font.SysFont("dejavusans", 40)
             text = font.render("Waiting for another player...", 1, (255, 0, 0), True)
@@ -69,7 +70,7 @@ class Client:
 
     def main_loop(self):
         clock = pygame.time.Clock()
-        network = NetworkService(self.server_port)
+        network = NetworkService(self.server_ip, self.server_port) # connection to the server
         print(network.get_player_index())
         player_index = int(network.get_player_index())  # get the index of the player
         while True:
@@ -90,13 +91,13 @@ class Client:
                         if button.click(position_of_pressed_mouse) and game.running():  # if game running button clicked
                             text = button.text  # get the text from button
                             if player_index == 0:  # if its the first player
-                                if not game.player_one_played: # dont allow to player one to change selection
+                                if not game.player_one_played:
                                     network.send(text)
                             else:
-                                if not game.player_two_played: # dont allow to player two to change selection
+                                if not game.player_two_played:
                                     network.send(text)
                 if game.doesBothPlayerPlayed():  # if both players have played there turn
-                    self.redrawWindow(self.window, game, player_index) # call function to show result one screen
+                    self.redrawWindow(self.window, game, player_index)
                     pygame.time.delay(500)
                     try:
                         game = network.send("reset")  # tell the server reset the game
@@ -104,7 +105,7 @@ class Client:
                         print(e)
                         break
 
-                    # getting text message to screen
+                    # getting output round text message to screen
                     font = pygame.font.SysFont("dejavuserif", 90)
                     if (game.play() == 1 and player_index == 1) or (game.play() == 0 and player_index == 0):  # means
                         # current client won
@@ -122,6 +123,13 @@ class Client:
 
 
 if __name__ == '__main__':
+    try:
+        PORT = int(sys.argv[2])
+        IP = sys.argv[1]
+    except Exception as e:
+        print(f'Wrong IP/Port: {e}')
+        sys.exit(1)
+
     pygame.font.init()
-    client = Client(int(sys.argv[1]))
+    client = Client(IP, PORT)
     client.main_loop()
