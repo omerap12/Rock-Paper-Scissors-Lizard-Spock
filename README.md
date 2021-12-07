@@ -1,6 +1,7 @@
 # Rock-Paper-Scissors-Lizard-Spock---Python
 
 How to run:
+(need to be on the same network)
 run server.py with valid port number
 for example: python3 server.py 1234
 
