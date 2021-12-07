@@ -7,7 +7,7 @@ from gameEngine import Game
 
 class Server:
     def __init__(self, port):
-        self.ip = "127.0.0.1"
+        self.ip = ''
         self.port = port
         self.server_socket = None
         self.connected = set()
